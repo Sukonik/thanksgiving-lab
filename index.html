@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en" data-theme="harvest">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#130d0a">
+  <meta name="description" content="A free, accountless Thanksgiving weekend planner for food, guests, travel, weather and quick notes.">
+  <title>Thanksgiving Lab</title>
+  <meta property="og:title" content="Thanksgiving Lab">
+  <meta property="og:description" content="Plan the meal. Host the weekend. Keep Thanksgiving enjoyable.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sukonik.github.io/thanksgiving-lab/">
+  <link rel="canonical" href="https://sukonik.github.io/thanksgiving-lab/">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="stylesheet" href="css/site.css">
+  <script>
+    document.documentElement.classList.add('js');
+    try { document.documentElement.dataset.theme = localStorage.getItem('thanksgiving-lab:theme') || 'harvest'; } catch (_) {}
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to planner</a>
+  <div class="paint" aria-hidden="true"></div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#dashboard" aria-label="Thanksgiving Lab home">
+        <svg class="brand-mark" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M32 27c-9-13-20-13-22-4 8 1 13 5 17 10-10-7-21-4-20 5 7-2 13 0 19 4-7-2-14 2-10 9 5-4 11-5 16-3 5-2 11-1 16 3 4-7-3-11-10-9 6-4 12-6 19-4 1-9-10-12-20-5 4-5 9-9 17-10-2-9-13-9-22 4Z"/>
+          <path d="M27 29h10l-1 17c0 4-2 7-4 7s-4-3-4-7l-1-17Z"/>
+          <circle cx="36" cy="31" r="1.5" class="eye"/><path d="m38 34 7 2-7 2Z" class="beak"/>
+        </svg>
+        <span><b>Thanksgiving</b><small>LAB 01</small></span>
+      </a>
+
+      <nav class="desktop-nav" aria-label="Primary">
+        <button class="nav-link is-active" data-view-link="dashboard">Home</button>
+        <button class="nav-link" data-view-link="food">Food Lab</button>
+        <button class="nav-link" data-view-link="weekend">Weekend</button>
+        <button class="nav-link" data-view-link="notes">Quick Notes</button>
+      </nav>
+
+      <button class="weather-chip" id="weatherChip" type="button" data-view-link="weather" aria-label="Open Turkey Weather">
+        <span class="weather-icon" id="weatherIcon">🍂</span>
+        <span id="weatherTemp">Weather</span>
+      </button>
+      <button class="icon-btn" id="menuOpen" type="button" aria-label="Open menu" aria-controls="drawer" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Planner menu" aria-hidden="true">
+    <div class="drawer-head">
+      <span class="eyebrow">Thanksgiving Lab</span>
+      <button class="icon-btn" id="menuClose" type="button" aria-label="Close menu">×</button>
+    </div>
+    <nav class="drawer-nav" aria-label="Planner sections">
+      <button data-view-link="dashboard"><span>Dashboard</span><small>01</small></button>
+      <button data-view-link="food"><span>Food Lab</span><small>02</small></button>
+      <button data-view-link="weekend"><span>Weekend</span><small>03</small></button>
+      <button data-view-link="weather"><span>Turkey Weather</span><small>04</small></button>
+      <button data-view-link="notes"><span>Quick Notes</span><small>05</small></button>
+    </nav>
+    <div class="drawer-section">
+      <span class="eyebrow">Harvest themes</span>
+      <div class="theme-grid" id="themeGrid">
+        <button data-theme-choice="harvest" aria-pressed="true"><i style="--sw:#d97832"></i>Harvest</button>
+        <button data-theme-choice="cranberry" aria-pressed="false"><i style="--sw:#db4161"></i>Cranberry</button>
+        <button data-theme-choice="evergreen" aria-pressed="false"><i style="--sw:#43b581"></i>Evergreen</button>
+        <button data-theme-choice="plum" aria-pressed="false"><i style="--sw:#b878d8"></i>Plum</button>
+      </div>
+    </div>
+    <div class="drawer-actions">
+      <button class="btn btn-primary" id="savePacket">Save packet</button>
+      <label class="btn btn-secondary" for="openPacket">Open packet</label>
+      <input id="openPacket" type="file" accept=".thanks,application/json" hidden>
+    </div>
+    <p class="fine-print">Your plan stays in this browser unless you save or open a packet. Packets are plain JSON, not encrypted.</p>
+  </aside>
+
+  <main id="main">
+    <section class="view is-active" id="dashboard" data-view="dashboard" aria-labelledby="dashboardTitle">
+      <div class="container hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span>01</span> / Thanksgiving command center</p>
+          <h1 id="dashboardTitle">Plan the meal.<br><em>Host the weekend.</em></h1>
+          <p class="lede">One calm, accountless workspace for food, guests, travel, weather and the notes that keep everything moving.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-view-link="food">Open Food Lab</button>
+            <button class="btn btn-secondary" id="printDashboard">Print quick sheet</button>
+          </div>
+          <div class="save-state" id="saveState" aria-live="polite"><span></span>Saved on this device</div>
+        </div>
+        <div class="countdown-card panel">
+          <div class="panel-top"><span class="eyebrow">Dinner countdown</span><span class="signal">LIVE PLAN</span></div>
+          <div class="countdown" id="countdown">Set your dinner time</div>
+          <label class="field"><span>Dinner date and time</span><input id="dinnerAt" type="datetime-local"></label>
+          <label class="field"><span>Planning location</span><input id="location" type="text" placeholder="Long Beach, NY or 11561"></label>
+          <div class="mini-weather" id="miniWeather"><span>🍂</span><div><b>Turkey Weather</b><small>Set a location for the forecast</small></div></div>
+        </div>
+      </div>
+
+      <div class="container section-block">
+        <div class="section-head">
+          <div><p class="eyebrow"><span>STATUS</span> / At a glance</p><h2>What needs attention</h2></div>
+          <p>The dashboard reads from your plan. Check something off and the whole workspace updates.</p>
+        </div>
+        <div class="stat-grid">
+          <button class="stat-card panel" data-view-link="food"><span>🛒</span><b id="groceryStat">0 / 0</b><small>Groceries purchased</small></button>
+          <button class="stat-card panel" data-view-link="food"><span>🍽️</span><b id="menuStat">0</b><small>Menu dishes</small></button>
+          <button class="stat-card panel" data-view-link="weekend"><span>👥</span><b id="guestStat">0</b><small>Expected guests</small></button>
+          <button class="stat-card panel" data-view-link="weekend"><span>🏡</span><b id="stayStat">0</b><small>Overnight guests</small></button>
+        </div>
+      </div>
+
+      <div class="container feature-grid section-block">
+        <article class="panel feature-card warm">
+          <p class="eyebrow">Next build block</p><h3>🔥 Oven Traffic Control</h3>
+          <p>V1 starts with the dinner target. The next release will schedule cooking, resting and reheating backward from that time.</p>
+        </article>
+        <article class="panel feature-card">
+          <p class="eyebrow">Accountless by design</p><h3>📦 Your plan is a file</h3>
+          <p>Save a <code>.thanks</code> packet and continue on another device without creating an account.</p>
+          <button class="text-link" id="savePacketInline">Save my packet →</button>
+        </article>
+        <article class="panel feature-card">
+          <p class="eyebrow">Fast in the kitchen</p><h3>📝 Quick Notes</h3>
+          <p>Print a compact grocery, menu, guest and weekend summary instead of the entire interface.</p>
+          <button class="text-link" data-view-link="notes">Prepare quick notes →</button>
+        </article>
+      </div>
+    </section>
+
+    <section class="view" id="food" data-view="food" aria-labelledby="foodTitle">
+      <div class="container page-intro">
+        <p class="eyebrow"><span>02</span> / Food Lab</p>
+        <h1 id="foodTitle">From grocery aisle<br>to dinner table.</h1>
+        <p class="lede">Build the menu and shopping list together. Everything saves on this device as you work.</p>
+      </div>
+      <div class="container workspace-grid">
+        <article class="panel workspace-card">
+          <div class="card-heading"><div><p class="eyebrow">Shopping</p><h2>🛒 Grocery list</h2></div><span class="count-pill" id="groceryPill">0 open</span></div>
+          <form class="add-row" id="groceryForm"><input id="groceryInput" maxlength="80" placeholder="Add an ingredient or supply" required><button class="add-btn" aria-label="Add grocery">+</button></form>
+          <ul class="check-list" id="groceryList"></ul>
+          <p class="empty-state" id="groceryEmpty">Add groceries as you plan. Try turkey, stock, foil or take-home containers.</p>
+        </article>
+        <article class="panel workspace-card">
+          <div class="card-heading"><div><p class="eyebrow">Table</p><h2>🍽️ Thanksgiving menu</h2></div><span class="count-pill" id="menuPill">0 dishes</span></div>
+          <form class="add-row split" id="menuForm"><select id="menuCourse" aria-label="Course"><option>Main</option><option>Side</option><option>Starter</option><option>Dessert</option><option>Drink</option><option>Breakfast</option></select><input id="menuInput" maxlength="80" placeholder="Add a dish" required><button class="add-btn" aria-label="Add dish">+</button></form>
+          <ul class="menu-list" id="menuList"></ul>
+          <p class="empty-state" id="menuEmpty">Start with the dishes you already know you want to serve.</p>
+        </article>
+      </div>
+      <div class="container section-block">
+        <div class="section-head"><div><p class="eyebrow">Cookbook starters</p><h2>Prep smarter</h2></div><p>Practical prompts, not food-safety guarantees. Verify temperatures and storage guidance with authoritative sources.</p></div>
+        <div class="tip-grid">
+          <article class="tip panel"><span>🧊</span><h3>Make ahead</h3><p>Mark sauces, pie dough and casseroles that can be prepared before Thursday.</p></article>
+          <article class="tip panel"><span>⏱️</span><h3>Work backward</h3><p>Start with dinner time, then add turkey rest time before oven availability.</p></article>
+          <article class="tip panel"><span>🥡</span><h3>Plan leftovers</h3><p>Add containers and labels to the grocery list before guests arrive.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="weekend" data-view="weekend" aria-labelledby="weekendTitle">
+      <div class="container page-intro">
+        <p class="eyebrow"><span>03</span> / Weekend planner</p>
+        <h1 id="weekendTitle">The holiday is<br>more than one meal.</h1>
+        <p class="lede">Plan who is coming, how many meals matter, where people rest and how everyone gets around.</p>
+      </div>
+      <div class="container form-grid">
+        <article class="panel form-card">
+          <p class="eyebrow">People</p><h2>👥 Guest picture</h2>
+          <div class="number-grid">
+            <label class="field"><span>Expected guests</span><input id="guests" type="number" min="0" max="200" inputmode="numeric"></label>
+            <label class="field"><span>Overnight guests</span><input id="overnights" type="number" min="0" max="200" inputmode="numeric"></label>
+            <label class="field"><span>Sit-down dinners</span><input id="dinners" type="number" min="0" max="20" inputmode="numeric"></label>
+            <label class="field"><span>Casual meals</span><input id="casualMeals" type="number" min="0" max="20" inputmode="numeric"></label>
+          </div>
+          <label class="field"><span>Dietary and accessibility notes</span><textarea id="guestNotes" rows="4" placeholder="Keep this practical and avoid unnecessary private information"></textarea></label>
+        </article>
+        <article class="panel form-card">
+          <p class="eyebrow">Space</p><h2>🏡 Stay and rest plan</h2>
+          <label class="field"><span>Home-stay plan</span><textarea id="stayNotes" rows="3" placeholder="Guest room, sofa, hotel links or still undecided"></textarea></label>
+          <label class="field"><span>After-dinner spaces</span><textarea id="restNotes" rows="3" placeholder="Conversation room, football area, quiet corner, children’s table"></textarea></label>
+          <label class="field"><span>Transportation notes</span><textarea id="transportNotes" rows="3" placeholder="Train pickup, carpool, parking, walking or bikes"></textarea></label>
+        </article>
+      </div>
+      <div class="container section-block">
+        <div class="section-head"><div><p class="eyebrow">Atmosphere</p><h2>Set the tone</h2></div><p>Curated starting points open in a new tab. No media autoplays and no connected account is required.</p></div>
+        <div class="link-grid">
+          <a class="panel link-card" href="https://open.spotify.com/search/thanksgiving%20dinner" target="_blank" rel="noopener"><span>🎵</span><div><b>Dinner playlists</b><small>Search Spotify</small></div></a>
+          <a class="panel link-card" href="https://www.youtube.com/results?search_query=thanksgiving+fireplace+ambience" target="_blank" rel="noopener"><span>🔥</span><div><b>Fireplace ambience</b><small>Search YouTube</small></div></a>
+          <a class="panel link-card" href="https://www.youtube.com/results?search_query=thanksgiving+family+movies" target="_blank" rel="noopener"><span>🎬</span><div><b>Family movie ideas</b><small>Browse suggestions</small></div></a>
+          <a class="panel link-card" href="https://www.google.com/maps/search/?api=1&query=hotels" target="_blank" rel="noopener"><span>🛏️</span><div><b>Nearby stays</b><small>Open map search</small></div></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" id="weather" data-view="weather" aria-labelledby="weatherTitle">
+      <div class="container page-intro weather-intro">
+        <p class="eyebrow"><span>04</span> / Turkey Weather</p>
+        <h1 id="weatherTitle">Forecast the errands,<br>travel and after-dinner walk.</h1>
+        <p class="lede">A compact Thanksgiving forecast powered by Open-Meteo. Weather remains optional and never blocks your saved plan.</p>
+      </div>
+      <div class="container weather-layout">
+        <article class="panel current-weather" id="weatherCurrent">
+          <div class="weather-big-icon">🍂</div><div><p class="eyebrow">Waiting for a location</p><strong>--°</strong><p>Enter a city or ZIP code on the dashboard.</p></div>
+        </article>
+        <div class="weather-days" id="weatherDays"></div>
+      </div>
+      <div class="container weather-actions">
+        <label class="field"><span>Forecast location</span><input id="weatherLocation" placeholder="Long Beach, NY or 11561"></label>
+        <button class="btn btn-primary" id="weatherRefresh">Refresh forecast</button>
+        <p class="fine-print" id="weatherSource">Only the location search and resolved coordinates are sent to Open-Meteo.</p>
+      </div>
+    </section>
+
+    <section class="view" id="notes" data-view="notes" aria-labelledby="notesTitle">
+      <div class="container page-intro">
+        <p class="eyebrow"><span>05</span> / Quick Notes</p>
+        <h1 id="notesTitle">One useful page.<br>No kitchen clutter.</h1>
+        <p class="lede">Add the reminder that does not fit anywhere else, then print a clean summary of the whole plan.</p>
+      </div>
+      <div class="container notes-layout">
+        <article class="panel note-editor">
+          <label class="field"><span>Host notes</span><textarea id="hostNotes" rows="14" placeholder="Add the reminders, family traditions, phone calls or last-minute details you cannot forget..."></textarea></label>
+          <div class="hero-actions"><button class="btn btn-primary" id="printNotes">Print quick notes</button><button class="btn btn-secondary" id="savePacketNotes">Save packet</button></div>
+        </article>
+        <article class="paper-preview" id="paperPreview" aria-label="Printable summary preview"></article>
+      </div>
+    </section>
+  </main>
+
+  <nav class="mobile-nav" aria-label="Mobile navigation">
+    <button class="is-active" data-view-link="dashboard"><span>⌂</span>Home</button>
+    <button data-view-link="food"><span>🍽️</span>Food</button>
+    <button data-view-link="weekend"><span>🏡</span>Weekend</button>
+    <button data-view-link="weather"><span>🌦️</span>Weather</button>
+    <button data-view-link="notes"><span>📝</span>Notes</button>
+  </nav>
+
+  <footer class="site-footer">
+    <div class="container footer-grid"><div><b>Thanksgiving Lab</b><p>Plan the meal. Host the weekend. Keep Thanksgiving enjoyable.</p></div><div class="footer-links"><a href="https://github.com/Sukonik/thanksgiving-lab">GitHub</a><a href="https://github.com/Sukonik/payout-lab">Packet inspiration</a><a href="https://github.com/Sukonik/wywo">Quick Notes inspiration</a><a href="https://github.com/Sukonik/weather-app">ClearSky</a></div></div>
+    <div class="container footer-bottom"><span>V1.0.0 · First public lab release</span><span>No signup · No trackers</span></div>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

@@ -1,8 +1,29 @@
+<p align="center"><img src="assets/favicon.svg" width="96" height="96" alt="Thanksgiving Lab turkey mark"></p>
+
 # 🦃 Thanksgiving Lab
+
+<p align="center">
+  <a href="https://sukonik.github.io/thanksgiving-lab/"><img alt="Open Thanksgiving Lab V1" src="https://img.shields.io/badge/🦃_OPEN_THANKSGIVING_LAB-V1.0.0-D97832?style=for-the-badge"></a>
+</p>
+
+<p align="center">
+  <a href="https://sukonik.github.io/thanksgiving-lab/#food"><img alt="Food Lab" src="https://img.shields.io/badge/🍽️_FOOD_LAB-4C1F14?style=flat-square"></a>
+  <a href="https://sukonik.github.io/thanksgiving-lab/#weekend"><img alt="Weekend Planner" src="https://img.shields.io/badge/🏡_WEEKEND-355E3B?style=flat-square"></a>
+  <a href="https://sukonik.github.io/thanksgiving-lab/#weather"><img alt="Turkey Weather" src="https://img.shields.io/badge/🌦️_TURKEY_WEATHER-7B4B94?style=flat-square"></a>
+  <a href="https://sukonik.github.io/thanksgiving-lab/#notes"><img alt="Quick Notes" src="https://img.shields.io/badge/📝_QUICK_NOTES-B36B32?style=flat-square"></a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/Sukonik/thanksgiving-lab/issues/12"><img alt="V1 Roadmap" src="https://img.shields.io/badge/🗺️_V1_ROADMAP-Issues-6E4B3A?style=flat-square"></a>
+  <a href="https://github.com/Sukonik/thanksgiving-lab/issues"><img alt="Issues" src="https://img.shields.io/badge/💡_ISSUES-Build_Next-8B5A2B?style=flat-square"></a>
+  <a href="https://github.com/Sukonik/thanksgiving-lab"><img alt="Source" src="https://img.shields.io/badge/💻_SOURCE-GitHub-181717?style=flat-square&logo=github"></a>
+</p>
+
+> **Current website: [Thanksgiving Lab V1.0.0](https://sukonik.github.io/thanksgiving-lab/)** · The newest public release always lives at this address.
 
 **Plan the meal, host the weekend, and keep Thanksgiving enjoyable.**
 
-Thanksgiving Lab is a proposed free, accountless website for organizing Thanksgiving dinner and the surrounding holiday weekend. It brings food planning, hosting logistics, local travel, entertainment, weather, and printable quick notes into one friendly workspace.
+Thanksgiving Lab is a free, accountless website for organizing Thanksgiving dinner and the surrounding holiday weekend. It brings food planning, hosting logistics, local travel, entertainment, weather, and printable quick notes into one friendly workspace.
 
 > **No signup. No cloud account. Your Thanksgiving plan is a file you own.**
 
@@ -56,7 +77,7 @@ The packet acts like the account:
 - 🧾 Save frozen planning receipts before major changes
 - 🔒 Keep data in the browser by default
 
-V1 packets would be plain JSON with validation and an integrity checksum. They would **not be encrypted**, so the app must clearly warn users not to store payment cards, identity documents, door codes, or other highly sensitive information.
+V1 packets are plain JSON with validation and an integrity checksum. They would **not be encrypted**, so the app must clearly warn users not to store payment cards, identity documents, door codes, or other highly sensitive information.
 
 ## 🍽️ Food Lab
 
@@ -207,6 +228,16 @@ V1 should prove that the website is genuinely useful before expanding into every
 | **V1E · Release** | Accessibility, mobile QA, privacy copy, GitHub Pages |
 | **Later · Identity** | Logo, favicon family, PWA icons, themed visual polish |
 
+## 🕰️ Website version history
+
+The main website address always opens the newest release. Older releases remain documented here by permanent commit so the project can be traced and restored.
+
+| Version | Date | Status | Highlights |
+|---|---|---|---|
+| **V1.0.0** | 2026-11-16 | **Current** | First public website: warm pearlescent command center, four harvest themes, local device saving, checksum-protected `.thanks` packets, Food Lab, weekend logistics, Quick Notes printing, atmosphere links, and live Turkey Weather. |
+
+**Maintenance rule:** when the site changes in a user-visible way, keep the newest live link at the top of this README, move the previous Current entry into this table, and add the new release above it.
+
 ## 🔐 Privacy principles
 
 - No signup required
@@ -219,6 +250,6 @@ V1 should prove that the website is genuinely useful before expanding into every
 
 ## 💡 Project status
 
-Thanksgiving Lab is currently in the **V1 product-definition stage**. The issue tracker contains the proposed build slices and acceptance criteria.
+Thanksgiving Lab V1.0.0 is live on GitHub Pages. The issue tracker contains the next build slices and acceptance criteria.
 
 Contributions and practical Thanksgiving-hosting ideas are welcome.

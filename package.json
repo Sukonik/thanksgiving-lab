@@ -1,0 +1,11 @@
+{
+  "name": "thanksgiving-lab",
+  "private": true,
+  "type": "module",
+  "version": "1.0.0",
+  "description": "A free, static, accountless Thanksgiving weekend planner.",
+  "scripts": {
+    "dev": "node scripts/dev-server.mjs",
+    "test": "python3 tests/check_site.py && node --check js/app.js && node --check js/weather.js"
+  }
+}

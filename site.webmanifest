@@ -1,0 +1,10 @@
+{
+  "name": "Thanksgiving Lab",
+  "short_name": "Turkey Lab",
+  "description": "An accountless Thanksgiving weekend planner.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#090706",
+  "theme_color": "#130d0a",
+  "icons": [{"src":"assets/favicon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+}
